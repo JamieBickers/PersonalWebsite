@@ -19,7 +19,9 @@ namespace PersonalWebsite.Controllers
     {
         private readonly AuthorizationManager authorizationManager;
         private readonly IMemoryCache cache;
+
         private const string LastStateChangeRequest = "last state change";
+        private const string GifsCacheKey = "gifs";
 
         public PrivateController(IConfiguration configuration, IMemoryCache cache)
         {
@@ -39,6 +41,46 @@ namespace PersonalWebsite.Controllers
         public IActionResult GetLastStateChangeRequestIfAuthorized([FromBody] CheckIfActionNeededRequest checkIfActionNeededRequest)
         {
             return ValidateThenAuthorizeThenExecute(checkIfActionNeededRequest, ActionToBeTaken);
+        }
+
+        [Route("gifs")]
+        [HttpPost]
+        public IActionResult EmailGifMatchingTagsIfAuthorized([FromBody] GifRequest gifRequest)
+        {
+            return ValidateThenAuthorizeThenExecute(gifRequest, AddGifRequestToCache);
+        }
+
+        private IActionResult AddGifRequestToCache(GifRequest gifRequest)
+        {
+            if (cache.TryGetValue(GifsCacheKey, out IEnumerable<GifRequest> cacheEntry))
+            {
+                lock (cacheEntry)
+                {
+                    cacheEntry.Append(gifRequest);
+                }
+            }
+            else
+            {
+                cache.Set(GifsCacheKey, new List<GifRequest>() { gifRequest });
+            }
+            return Ok();
+        }
+
+        [Route("getGifs")]
+        [HttpPost]
+        public IActionResult GetGifRequests([FromBody] RequestForAllGifRequests requestForAllGifRequests)
+        {
+            if (cache.TryGetValue(GifsCacheKey, out IEnumerable<GifRequest> gifRequests))
+            {
+                lock (gifRequests)
+                {
+                    return Ok(gifRequests);
+                }
+            }
+            else
+            {
+                return Ok();
+            }
         }
 
         private IActionResult ActionToBeTaken(CheckIfActionNeededRequest checkIfActionNeededRequest)
@@ -73,7 +115,7 @@ namespace PersonalWebsite.Controllers
             else
             {
                 cache.Set(LastStateChangeRequest, new PcStateChangeCacheEntry(pcStateChangeRequest.Action, DateTimeOffset.Now));
-                return Ok(pcStateChangeRequest);
+                return Ok();
             }
         }
 
