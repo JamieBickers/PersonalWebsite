@@ -4,7 +4,7 @@ then
 	echo "Need a commit message!"
 	exit 1
 fi
-git add .
+git add -A .
 git commit -m "$1"
 git push
 dotnet publish -c Release
