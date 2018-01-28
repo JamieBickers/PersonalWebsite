@@ -8,12 +8,12 @@ namespace PersonalWebsite.Models
 {
     public class PcStateChangeRequest : IPrivateApiRequest, IValidatableObject
     {
-        public AuthorizationDetails AuthorizationDetails { get; set; }
+        public string Password { get; set; }
         public string Action { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (AuthorizationDetails == null)
+            if (Password == null)
             {
                 yield return new ValidationResult("Must have authorization details.");
             }

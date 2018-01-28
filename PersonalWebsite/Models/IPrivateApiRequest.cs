@@ -7,6 +7,6 @@ namespace PersonalWebsite.Models
 {
     interface IPrivateApiRequest
     {
-        AuthorizationDetails AuthorizationDetails { get; set; }
+        string Password { get; set; }
     }
 }

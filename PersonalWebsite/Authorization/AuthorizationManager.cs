@@ -19,14 +19,13 @@ namespace PersonalWebsite.Authorization
             Authorized = false;
         }
 
-        public void SignIn(AuthorizationDetails authorizationDetails)
+        public void SignIn(string password)
         {
-            var passwordBytes = Encoding.ASCII.GetBytes(authorizationDetails.Password);
+            var passwordBytes = Encoding.ASCII.GetBytes(password);
             var passwordHash = hasher.ComputeHash(passwordBytes);
             var passwordHashAsString = System.Convert.ToBase64String(passwordHash);
-            var expectedUsername = configuration["LoginDetails:Username"];
             var expectedPasswordHashAsString = configuration["LoginDetails:PasswordHash"];
-            if ((authorizationDetails.Username == expectedUsername) && (passwordHashAsString == expectedPasswordHashAsString))
+            if (passwordHashAsString == expectedPasswordHashAsString)
             {
                 Authorized = true;
             }

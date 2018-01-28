@@ -29,6 +29,12 @@ namespace PersonalWebsite.Controllers
             this.cache = cache;
         }
 
+        [HttpGet]
+        public IActionResult Private()
+        {
+            return View();
+        }
+
         [Route("pcState")]
         [HttpPost]
         public IActionResult ChangePcStateIfAuthorized([FromBody] PcStateChangeRequest pcStateChangeRequest)
@@ -50,22 +56,6 @@ namespace PersonalWebsite.Controllers
             return ValidateThenAuthorizeThenExecute(gifRequest, AddGifRequestToCache);
         }
 
-        private IActionResult AddGifRequestToCache(GifRequest gifRequest)
-        {
-            if (cache.TryGetValue(GifsCacheKey, out IEnumerable<GifRequest> cacheEntry))
-            {
-                lock (cacheEntry)
-                {
-                    cacheEntry.Append(gifRequest);
-                }
-            }
-            else
-            {
-                cache.Set(GifsCacheKey, new List<GifRequest>() { gifRequest });
-            }
-            return Ok();
-        }
-
         [Route("getGifs")]
         [HttpPost]
         public IActionResult GetGifRequests([FromBody] RequestForAllGifRequests requestForAllGifRequests)
@@ -81,6 +71,22 @@ namespace PersonalWebsite.Controllers
             {
                 return Ok();
             }
+        }
+
+        private IActionResult AddGifRequestToCache(GifRequest gifRequest)
+        {
+            if (cache.TryGetValue(GifsCacheKey, out IEnumerable<GifRequest> cacheEntry))
+            {
+                lock (cacheEntry)
+                {
+                    cacheEntry.Append(gifRequest);
+                }
+            }
+            else
+            {
+                cache.Set(GifsCacheKey, new List<GifRequest>() { gifRequest });
+            }
+            return Ok();
         }
 
         private IActionResult ActionToBeTaken(CheckIfActionNeededRequest checkIfActionNeededRequest)
@@ -110,7 +116,7 @@ namespace PersonalWebsite.Controllers
         {
             if (IsTooSoonAfterLastStateChangeRequest(pcStateChangeRequest))
             {
-                return BadRequest($"Too soon since last {pcStateChangeRequest.Action} request.");
+                return StatusCode(429);
             }
             else
             {
@@ -138,7 +144,7 @@ namespace PersonalWebsite.Controllers
             {
                 return BadRequest(ModelState);
             }
-            authorizationManager.SignIn(body.AuthorizationDetails);
+            authorizationManager.SignIn(body.Password);
             if (authorizationManager.Authorized)
             {
                 return action(body);

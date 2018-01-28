@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Private";
+}
+
+<h1>Manage Computer</h1>
+
+<div>
+    <p>Password: <input id="password"/></p>
+    <p><button id="start">Start Pc</button></p>
+    <p><button id="sleep">Sleep Pc</button></p>
+    <p><button id="hibernate">Hibernate Pc</button></p>
+    <p><button id="shutdown">Shutdown Pc</button></p>
+    <p>Request file: <input id="fileInput" /><button id="file">Request File</button></p>
+    <p id="3"></p>
+</div>
+
+<script type="text/javscript" src="/Views/Private/Scripts.js"></script>
+
+<script>
+    document.getElementById("start").onclick = actionApiCall("startup")
+    document.getElementById("sleep").onclick = actionApiCall("sleep")
+    document.getElementById("hibernate").onclick = actionApiCall("hibernate")
+    document.getElementById("shutdown").onclick = actionApiCall("shutdown")
+    document.getElementById("file").onclick = apiCall("gifs", { "Tags": document.getElementById("fileInput").value.split(" ") })
+
+    function actionApiCall(action) {
+        return apiCall("pcState", { Action: action })
+    }
+
+    function apiCall(route, body) {
+        return function () {
+            body.Password = document.getElementById("password").value;
+            fetch(`./private/${route}`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        console.log("Invalid Password");
+                    }
+                    else if (response.status === 429) {
+                        console.log("Too many requests.");
+                    }
+                    else if (response.status !== 200) {
+                        console.log('Looks like there was a problem. Status Code: ' +
+                            response.status);
+                    }
+                    else {
+                        console.log("Success");
+                    }
+                }
+                )
+        }
+    }
+</script>
