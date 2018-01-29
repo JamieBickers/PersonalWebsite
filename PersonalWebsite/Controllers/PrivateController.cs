@@ -22,6 +22,8 @@ namespace PersonalWebsite.Controllers
 
         private const string LastStateChangeRequest = "last state change";
         private const string GifsCacheKey = "gifs";
+        private const int MinimumWaitBetweenStateChangeRequests = 5;
+        private const int ExpiryTimeOnStateChangeRequest = 180;
 
         public PrivateController(IConfiguration configuration, IMemoryCache cache)
         {
@@ -93,7 +95,7 @@ namespace PersonalWebsite.Controllers
         {
             if (cache.TryGetValue(LastStateChangeRequest, out PcStateChangeCacheEntry cacheEntry))
             {
-                var entryIsRecent = (DateTimeOffset.Now - cacheEntry.Date).TotalSeconds < 180;
+                var entryIsRecent = (DateTimeOffset.Now - cacheEntry.Date).TotalSeconds < ExpiryTimeOnStateChangeRequest;
                 var entryIsRelevant = checkIfActionNeededRequest.Actions.Contains(cacheEntry.Action);
 
                 if (entryIsRecent && entryIsRelevant)
@@ -129,7 +131,7 @@ namespace PersonalWebsite.Controllers
         {
             if (cache.TryGetValue(LastStateChangeRequest, out PcStateChangeCacheEntry cacheEntry))
             {
-                return (DateTimeOffset.Now - cacheEntry.Date).TotalSeconds < 180;
+                return (DateTimeOffset.Now - cacheEntry.Date).TotalSeconds < MinimumWaitBetweenStateChangeRequests;
             }
             else
             {
