@@ -24,7 +24,7 @@ namespace PersonalWebsite.Authorization
             var passwordBytes = Encoding.ASCII.GetBytes(password);
             var passwordHash = hasher.ComputeHash(passwordBytes);
             var passwordHashAsString = System.Convert.ToBase64String(passwordHash);
-            var expectedPasswordHashAsString = configuration["LoginDetails:PasswordHash"];
+            var expectedPasswordHashAsString = configuration["PasswordHash"];
             if (passwordHashAsString == expectedPasswordHashAsString)
             {
                 Authorized = true;
