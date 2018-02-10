@@ -1,0 +1,47 @@
+﻿@model Project
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<h1>@Model.Title</h1>
+
+<h3>What</h3>
+<hr/>
+<div>
+    @(Model.What)
+</div>
+
+<h3>Why</h3>
+<hr />
+<div>
+    @Model.Why
+</div>
+
+<h3>How To Use</h3>
+<hr />
+<div>
+    @Model.HowToUse
+</div>
+
+<h3>Thoughts</h3>
+<hr />
+<div>
+    @{
+        foreach (var thought in Model.Thoughts)
+        {
+            <p>@thought</p>
+        }
+    }
+</div>
+
+<h3>Languages and Libraries</h3>
+<hr />
+<div>
+    @{
+        foreach (var technology in Model.LanguagesAndLibraries)
+        {
+            <h4>@technology.LanguageOrLibrary</h4>
+            <p>@technology.Description</p>
+        }
+    }
+</div>

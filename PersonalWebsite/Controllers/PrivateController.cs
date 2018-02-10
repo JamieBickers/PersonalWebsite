@@ -66,7 +66,8 @@ namespace PersonalWebsite.Controllers
             {
                 lock (gifRequests)
                 {
-                    return Ok(gifRequests);
+                    // no point sending the password
+                    return Ok(gifRequests.Select(request => new { request.Tags }));
                 }
             }
             else

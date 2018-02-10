@@ -6,19 +6,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsite.Models;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace PersonalWebsite.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IConfiguration configuration;
+
+        public HomeController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        [Route("projects/{projectName}")]
+        public IActionResult Projects(string projectName)
         {
-            return View();
+            var configurationSection = configuration.GetSection($"Projects:{projectName}");
+            var project = new Project();
+            configurationSection.Bind(project);
+
+            return View(project);
         }
 
         public IActionResult Contact()

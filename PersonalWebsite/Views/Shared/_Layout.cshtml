@@ -6,24 +6,33 @@
     <title>@ViewData["Title"] - Jamie Bickers</title>
 
     <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-            asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-            asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;">
         <div class="container">
             <div class="navbar-header">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Jamie Bickers</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand navbarFont">Jamie Bickers</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Projects</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li ><a asp-area="" asp-controller="Home" asp-action="Index" class="navbarFont">Home</a></li>
+                    <li class="btn-group nav">
+                        <button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown" style="background-color: inherit; color: lightgray;">
+                            <span class="navbarFont">Projects</span>
+                            <span class="sr-only navbarFont">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/projects/MathematicsQuestionGeneratorApi" class="navbarFont">Mathematics Question Generator Api</a></li>
+                            <li><a href="MathematicsQuestionsWebsite" class="navbarFont">Mathematics Question Generator Website</a></li>
+                        </ul>
+                    </li>  
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact" color="navbarFont">Contact</a></li>
                 </ul>
                 <ul class="nav navbar-nav mr-auto" style="float: right">
-                    <li><a asp-area="" asp-controller="Private" asp-action="Private">Private</a></li>
+                    <li><a asp-area="" asp-controller="Private" asp-action="Private" class="navbarFont">Private</a></li>
                 </ul>
             </div>
         </div>
@@ -49,3 +58,8 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+<style>
+    .navbarFont {
+        color: lightgray;
+    }
+</style>

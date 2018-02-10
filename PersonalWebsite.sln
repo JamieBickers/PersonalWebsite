@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebsite", "PersonalWebsite\PersonalWebsite.csproj", "{BF531DAB-C413-4597-B37F-4C518BD0E902}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordHashGenerator", "PasswordHashGenerator\PasswordHashGenerator.csproj", "{9C0B3F27-E6A3-4B6C-BACE-79EF96FE6756}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasswordHashGenerator", "PasswordHashGenerator\PasswordHashGenerator.csproj", "{9C0B3F27-E6A3-4B6C-BACE-79EF96FE6756}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
