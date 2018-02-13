@@ -30,10 +30,10 @@
     document.getElementById("sleep").onclick = actionApiCall("sleep", "sleep-error")
     document.getElementById("hibernate").onclick = actionApiCall("hibernate", "hibernate-error")
     document.getElementById("shutdown").onclick = actionApiCall("shutdown", "shutdown-error")
-    document.getElementById("file").onclick = apiCall("gifs", "fileInput-error", { "Tags": document.getElementById("fileInput").value.split(" ") })
+    document.getElementById("file").onclick = apiCall("gifs", "fileInput-error", { "Tags": document.getElementById("fileInput").value.split(" ") });
 
     function actionApiCall(action, errorTagId) {
-        return apiCall("pcState", errorTagId, { Action: action })
+        return apiCall("pcState", errorTagId, { Action: action });
     }
 
     function displayStatus(status) {

@@ -66,6 +66,8 @@ namespace PersonalWebsite.Controllers
             {
                 lock (gifRequests)
                 {
+                    cache.Remove(GifsCacheKey);
+
                     // no point sending the password
                     return Ok(gifRequests.Select(request => new { request.Tags }));
                 }
