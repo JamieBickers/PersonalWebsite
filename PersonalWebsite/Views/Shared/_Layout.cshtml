@@ -11,14 +11,14 @@
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: rebeccapurple;">
         <div class="container">
             <div class="navbar-header">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand navbarFont">Jamie Bickers</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand" style="color: lightgray">Jamie Bickers</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li ><a asp-area="" asp-controller="Home" asp-action="Index" class="navbarFont">Home</a></li>
+            <div class="navbar-collapse collapse" style="color: red">
+                <ul class="nav navbar-nav" style="color: brown">
+                    <li style="color: red"><a asp-area="" asp-controller="Home" asp-action="Index" style="color: lightgray">Home</a></li>
                     <li class="btn-group nav">
                         <button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown" style="background-color: inherit; color: lightgray;">
                             <span class="navbarFont">Projects</span>
@@ -31,10 +31,10 @@
 							<li><a href="/projects/JsonBooleanEvaluator" class="navbarFont">Json Boolean Evaluator</a></li>
                         </ul>
                     </li>  
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact" color="navbarFont">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact" color="navbarFont" style="color: lightgray">Contact</a></li>
                 </ul>
                 <ul class="nav navbar-nav mr-auto" style="float: right">
-                    <li><a asp-area="" asp-controller="Private" asp-action="Private" class="navbarFont">Private</a></li>
+                    <li><a asp-area="" asp-controller="Private" asp-action="Private" style="color: lightgray">Private</a></li>
                 </ul>
             </div>
         </div>
@@ -60,8 +60,3 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-<style>
-    .navbarFont {
-        color: lightgray;
-    }
-</style>

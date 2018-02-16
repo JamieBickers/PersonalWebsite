@@ -20,28 +20,27 @@
 <h3>How To Use</h3>
 <hr />
 <div>
-    @Model.HowToUse
+    @foreach (var item in Model.HowToUse)
+    {
+        <p>@item</p>
+    }
 </div>
 
 <h3>Thoughts</h3>
 <hr />
 <div>
-    @{
-        foreach (var thought in Model.Thoughts)
+        @foreach (var thought in Model.Thoughts)
         {
             <p>@thought</p>
         }
-    }
 </div>
 
 <h3>Languages and Libraries</h3>
 <hr />
 <div>
-    @{
-        foreach (var technology in Model.LanguagesAndLibraries)
+        @foreach (var technology in Model.LanguagesAndLibraries)
         {
             <h4>@technology.LanguageOrLibrary</h4>
             <p>@technology.Description</p>
         }
-    }
 </div>
